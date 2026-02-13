@@ -39,10 +39,10 @@
   </g>
 
   <!-- SOFTWARE LABS text -->
-  <text x="270" y="140" font-family="'Montserrat', 'Inter', 'Helvetica Neue', sans-serif" font-size="22" font-weight="600" fill="#94A3B8" letter-spacing="12" text-anchor="start">SOFTWARE LABS</text>
+  <text x="265" y="140" font-family="'Montserrat', 'Inter', 'Helvetica Neue', sans-serif" font-size="20" font-weight="600" fill="#94A3B8" letter-spacing="8" text-anchor="start">SOFTWARE LABS</text>
 
   <!-- Decorative dot separator -->
-  <circle cx="257" cy="134" r="2.5" fill="#D4A843"/>
+  <circle cx="253" cy="134" r="2.5" fill="#D4A843"/>
 
   <!-- Version/tagline micro text -->
   <text x="560" y="180" font-family="'SF Mono', 'Fira Code', monospace" font-size="9" fill="#94A3B8" opacity="0.4" text-anchor="end">EST. 2024</text>
