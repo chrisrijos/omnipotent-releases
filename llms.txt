@@ -1,0 +1,57 @@
+# Omnipotent
+
+> Omnipotent is a Federated AI Sovereign Operating System — a self-healing,
+> multi-agent orchestration platform that runs entirely on user-owned
+> infrastructure with Docker Swarm, Deno, and Rust.
+
+Omnipotent coordinates AI agent swarms through two closed-loop orchestration
+protocols with mandatory human checkpoints, a Signal Bus architecture, and
+tiered memory (Hot/Cold/Federated).
+
+## Core Architecture
+
+- **Kernel (Archon):** A Deno runtime for background agents with Signal Bus coordination.
+- **Orchestration (Two Loops):** Planning Loop + Execution Loop with mandatory human checkpoints. Perceive, plan, execute, reflect.
+- **Memory (Mnemosyne):** Hot (filesystem), Cold (pgvector), Federated (Graphiti temporal knowledge graphs).
+
+## The Legion — 12 Agent Personas
+
+Archon (Kernel Architect), Oracle (Intel & Research), Shadow Route (Ops & Orchestration), Validitus (Security & QA), Codex (Ancient Wise / Truth), Eidolon (UI/Voice Creative), Artificer (CI/CD & Self-Upgrade), Diplomat (Federation Sync), Quartermaster (Supply & Scaffold), Scout (Reconnaissance), Mnemon (Memory Keeper), Mercator (Cartographer).
+
+## Key Protocols
+
+- **Signal Bus:** Event-driven inter-agent communication (omnipotent:bus:*).
+- **Mnemosyne Protocol:** Tiered memory system preventing context drift and hallucination.
+- **Ouroboros Protocol:** Self-healing, self-updating infrastructure via Blue/Green container swap.
+- **Airlock Protocol:** Controlled federation sync between Sovereign (local) and Alliance (remote) data.
+- **Mirror of Void:** Recursive self-correction cycle (Autopsy, Calculus, Evolution).
+
+## Tech Stack
+
+Docker Swarm, Deno, Rust, Redis, PostgreSQL (pgvector), Graphiti, LangGraph.
+
+## Installation
+
+Source build:
+```
+git clone https://github.com/chrisrijos/omnipotent.git
+cd omnipotent/tools/omnipotent-cli
+cargo install --path .
+omnipotent init
+omnipotent up
+```
+
+Pre-built binaries for macOS (.dmg) and Linux are coming soon.
+
+## Docs
+
+- [Overview](https://chrisrijos.github.io/omnipotent-releases/): Product overview and download
+- [GitHub](https://github.com/chrisrijos/omnipotent): Source code and documentation
+
+## Optional
+
+- [Releases](https://chrisrijos.github.io/omnipotent-releases/): Download page
+
+## Organization
+
+RijoS Software / DuoNode Inc
