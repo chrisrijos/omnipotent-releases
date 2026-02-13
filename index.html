@@ -1294,20 +1294,20 @@
       <div class="container">
         <span class="section-label sr" style="--sr-delay:0ms">Install</span>
         <h2 id="download-heading" class="section-heading sr" style="--sr-delay:60ms">Get Omnipotent</h2>
-        <p class="section-sub sr" style="--sr-delay:120ms">Three paths to sovereignty. Build from source today, or wait for the pre-built binaries.</p>
+        <p class="section-sub sr" style="--sr-delay:120ms">Download the pre-built binary for Apple Silicon, build from source, or grab the latest release.</p>
 
         <div class="download-grid">
-          <!-- macOS -->
+          <!-- macOS Apple Silicon -->
           <article class="download-card sr" style="--sr-delay:100ms">
             <h3>macOS</h3>
-            <span class="dl-platform">Apple Silicon + Intel</span>
-            <p class="dl-desc">Native .dmg installer with automatic PATH setup and CLI registration.</p>
+            <span class="dl-platform">Apple Silicon (arm64)</span>
+            <p class="dl-desc">Pre-built binary for M1/M2/M3/M4. Extract, add to PATH, and run <code>omnipotent init</code>.</p>
             <div>
-              <button type="button" class="btn-download" aria-disabled="true" aria-label="macOS download coming soon">
+              <a href="https://github.com/chrisrijos/omnipotent-releases/releases/download/v1.0.0/omnipotent-1.0.0-darwin-arm64.tar.gz" class="btn-download active" aria-label="Download Omnipotent for macOS Apple Silicon">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83z"/><path d="M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-                Download .dmg
-                <span class="badge-soon">Coming Soon</span>
-              </button>
+                Download .tar.gz
+                <span class="badge-soon" style="background:rgba(0,212,255,0.15);color:#00D4FF;">v1.0.0</span>
+              </a>
             </div>
           </article>
 
@@ -1343,6 +1343,10 @@ omnipotent up</code>
             </a>
           </article>
         </div>
+
+        <p class="section-sub sr" style="--sr-delay:320ms;margin-top:2rem;font-size:0.9rem;">
+          <a href="https://github.com/chrisrijos/omnipotent-releases/releases" target="_blank" rel="noopener noreferrer" style="color:#00D4FF;text-decoration:none;border-bottom:1px solid rgba(0,212,255,0.3);">View All Releases &rarr;</a>
+        </p>
       </div>
     </section>
 
