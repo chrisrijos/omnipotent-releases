@@ -436,8 +436,57 @@
     }
     .site-nav a:hover { color: var(--text-primary); }
 
+    /* Mobile menu toggle */
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-sm);
+      padding: var(--space-2);
+      cursor: pointer;
+      color: var(--text-secondary);
+      min-width: 44px;
+      min-height: 44px;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--dur-fast) var(--ease-smooth);
+    }
+    .mobile-menu-btn:hover {
+      color: var(--sovereign-gold);
+      border-color: var(--gold-muted);
+    }
+    .mobile-menu-btn:focus-visible {
+      outline: 2px solid var(--sovereign-gold);
+      outline-offset: 3px;
+    }
+    .mobile-menu-btn .icon-close { display: none; }
+    .mobile-menu-btn.active .icon-menu { display: none; }
+    .mobile-menu-btn.active .icon-close { display: block; }
+
     @media (max-width: 640px) {
-      .site-nav { display: none; }
+      .mobile-menu-btn { display: flex; }
+      .site-nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background: rgba(10,15,20,0.96);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        padding: var(--space-4) var(--space-5);
+        gap: 0;
+      }
+      .site-nav.open { display: flex; }
+      .site-nav a {
+        display: block;
+        padding: var(--space-3) var(--space-2);
+        font-size: 0.95rem;
+        border-bottom: 1px solid rgba(255,255,255,0.04);
+      }
+      .site-nav a:last-child { border-bottom: none; }
     }
 
     /* ============================================================
@@ -552,6 +601,7 @@
       padding: var(--space-4) var(--space-5);
       padding-right: var(--space-12);
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .hero-install-code code {
@@ -722,6 +772,8 @@
       transform: translateY(4px);
       transition: opacity 0.4s var(--ease-sovereign), transform 0.4s var(--ease-sovereign);
       white-space: pre;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .terminal-window.visible .terminal-line {
@@ -1430,17 +1482,84 @@
     }
 
     /* ============================================================
-       RESPONSIVE
+       RESPONSIVE — MOBILE FIRST
        ============================================================ */
+
+    /* Very small screens (≤420px) */
+    @media (max-width: 420px) {
+      .legion-grid {
+        grid-template-columns: 1fr;
+      }
+      .terminal-body {
+        padding: var(--space-3) var(--space-4);
+        font-size: 0.68rem;
+      }
+      .hero-install-code code {
+        font-size: 0.72rem;
+      }
+      .step-code code {
+        font-size: 0.72rem;
+      }
+      .philosophy-card {
+        padding: var(--space-6) var(--space-4);
+      }
+      .philosophy-quote {
+        padding-left: var(--space-4);
+        font-size: 0.85rem;
+      }
+      .persona-card {
+        padding: var(--space-5);
+      }
+      .faq-item summary {
+        padding: var(--space-4);
+        font-size: 0.88rem;
+      }
+      .faq-answer {
+        padding: 0 var(--space-4) var(--space-4);
+      }
+    }
+
+    /* Small screens (≤640px) */
     @media (max-width: 640px) {
       .section { padding: var(--space-16) 0; }
-      .hero { padding-top: var(--space-16); }
+      .hero { padding-top: var(--space-16); min-height: auto; padding-bottom: var(--space-12); }
       .hero-ctas { flex-direction: column; }
       .hero-ctas .btn { width: 100%; }
       .trust-row { gap: var(--space-6); }
       .hero-watermark {
         width: 300px;
         height: 300px;
+      }
+      .terminal-body {
+        font-size: 0.72rem;
+        padding: var(--space-4);
+      }
+      .terminal-line {
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+      .philosophy-card {
+        padding: var(--space-8) var(--space-5);
+      }
+      .philosophy-quote {
+        padding-left: var(--space-4);
+        font-size: 0.88rem;
+      }
+      .philosophy-citations {
+        font-size: 0.7rem;
+      }
+      .hero-install {
+        max-width: 100%;
+      }
+      .hero-install-code code {
+        font-size: 0.75rem;
+      }
+      .persona-card {
+        padding: var(--space-6);
+      }
+      .step-code {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
       }
     }
 
@@ -1468,7 +1587,11 @@
         </svg>
         OMNIPOTENT
       </a>
-      <nav class="site-nav" aria-label="Main navigation">
+      <button class="mobile-menu-btn" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="main-nav">
+        <svg class="icon-menu" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        <svg class="icon-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <nav id="main-nav" class="site-nav" aria-label="Main navigation">
         <a href="#features">Features</a>
         <a href="#legion">The Legion</a>
         <a href="#install">Install</a>
@@ -2152,6 +2275,35 @@
           btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>';
           btn.setAttribute('aria-label', 'Copy install command');
         }, 2000);
+      }
+
+      /* ---- Mobile hamburger menu ---- */
+      var menuBtn = document.querySelector('.mobile-menu-btn');
+      var nav = document.getElementById('main-nav');
+      if (menuBtn && nav) {
+        menuBtn.addEventListener('click', function() {
+          var isOpen = nav.classList.toggle('open');
+          menuBtn.classList.toggle('active', isOpen);
+          menuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+
+        // Close menu on nav link click
+        nav.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            nav.classList.remove('open');
+            menuBtn.classList.remove('active');
+            menuBtn.setAttribute('aria-expanded', 'false');
+          });
+        });
+
+        // Close menu on outside click
+        document.addEventListener('click', function(e) {
+          if (!nav.contains(e.target) && !menuBtn.contains(e.target) && nav.classList.contains('open')) {
+            nav.classList.remove('open');
+            menuBtn.classList.remove('active');
+            menuBtn.setAttribute('aria-expanded', 'false');
+          }
+        });
       }
 
       /* ---- Smooth scroll for hash links ---- */

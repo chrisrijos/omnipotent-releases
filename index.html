@@ -387,8 +387,53 @@
     }
     .site-nav a:hover { color: var(--text-primary); }
 
+    /* Mobile menu toggle */
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      padding: 8px;
+      cursor: pointer;
+      color: var(--text-secondary);
+      min-width: 44px;
+      min-height: 44px;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--dur-fast) var(--ease-smooth);
+    }
+    .mobile-menu-btn:hover {
+      color: var(--sovereign-gold);
+      border-color: var(--gold-muted);
+    }
+    .mobile-menu-btn .icon-close { display: none; }
+    .mobile-menu-btn.active .icon-menu { display: none; }
+    .mobile-menu-btn.active .icon-close { display: block; }
+
     @media (max-width: 640px) {
-      .site-nav { display: none; }
+      .mobile-menu-btn { display: flex; }
+      .site-nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background: rgba(10,15,20,0.96);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        padding: 16px 20px;
+        gap: 0;
+      }
+      .site-nav.open { display: flex; }
+      .site-nav a {
+        display: block;
+        padding: 12px 8px;
+        font-size: 0.95rem;
+        border-bottom: 1px solid rgba(255,255,255,0.04);
+      }
+      .site-nav a:last-child { border-bottom: none; }
     }
 
     /* ============================================================
@@ -984,14 +1029,25 @@
     }
 
     /* ============================================================
-       RESPONSIVE POLISH
+       RESPONSIVE POLISH — MOBILE FIRST
        ============================================================ */
     @media (max-width: 640px) {
       .section { padding: var(--space-16) 0; }
-      .hero { padding-top: var(--space-16); }
+      .hero { padding-top: var(--space-16); min-height: auto; padding-bottom: var(--space-12); }
       .hero-ctas { flex-direction: column; }
       .hero-ctas .btn { width: 100%; }
       .trust-row { gap: var(--space-6); }
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+      .footer-nav {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .footer-right {
+        text-align: center;
+      }
     }
   </style>
 </head>
@@ -1013,7 +1069,11 @@
         </svg>
         OMNIPOTENT
       </a>
-      <nav class="site-nav" aria-label="Main navigation">
+      <button class="mobile-menu-btn" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="main-nav-v1">
+        <svg class="icon-menu" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        <svg class="icon-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <nav id="main-nav-v1" class="site-nav" aria-label="Main navigation">
         <a href="#pillars">Architecture</a>
         <a href="#legion">The Legion</a>
         <a href="#download">Download</a>
@@ -1509,6 +1569,31 @@ omnipotent tutorial</code>
       document.querySelectorAll('.sr').forEach(function(el) {
         observer.observe(el);
       });
+
+      /* ---- Mobile hamburger menu ---- */
+      var menuBtn = document.querySelector('.mobile-menu-btn');
+      var nav = document.getElementById('main-nav-v1');
+      if (menuBtn && nav) {
+        menuBtn.addEventListener('click', function() {
+          var isOpen = nav.classList.toggle('open');
+          menuBtn.classList.toggle('active', isOpen);
+          menuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+        nav.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            nav.classList.remove('open');
+            menuBtn.classList.remove('active');
+            menuBtn.setAttribute('aria-expanded', 'false');
+          });
+        });
+        document.addEventListener('click', function(e) {
+          if (!nav.contains(e.target) && !menuBtn.contains(e.target) && nav.classList.contains('open')) {
+            nav.classList.remove('open');
+            menuBtn.classList.remove('active');
+            menuBtn.setAttribute('aria-expanded', 'false');
+          }
+        });
+      }
     })();
   </script>
 
