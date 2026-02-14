@@ -25,12 +25,20 @@ Archon (Kernel Architect), Oracle (Intel & Research), Shadow Route (Ops & Orches
 - **Ouroboros Protocol:** Self-healing, self-updating infrastructure via Blue/Green container swap.
 - **Airlock Protocol:** Controlled federation sync between Sovereign (local) and Alliance (remote) data.
 - **Mirror of Void:** Recursive self-correction cycle (Autopsy, Calculus, Evolution).
+- **Diplomat Protocol:** Git-based V1 sync between sovereign instances via the Airlock.
 
 ## Tech Stack
 
 Docker Swarm, Deno, Rust, Redis, PostgreSQL (pgvector), Graphiti, LangGraph.
 
 ## Installation
+
+Pre-built binary (macOS arm64):
+```
+curl -L https://github.com/chrisrijos/omnipotent-releases/releases/download/v1.0.0/omnipotent-1.0.0-darwin-arm64.tar.gz | tar xz
+omnipotent init
+omnipotent up
+```
 
 Source build:
 ```
@@ -41,12 +49,31 @@ omnipotent init
 omnipotent up
 ```
 
-Pre-built binaries for macOS (.dmg) and Linux are coming soon.
+## Page Structure (v2)
+
+1. Hero — Question hook + install CTA
+2. Trust Bar — Technology stack credibility
+3. Terminal Demo — Animated omnipotent init + omnipotent up sequence
+4. Benefits Grid — 6 cards: sovereign hardware, self-healing, memory, orchestration, security, legion
+5. Legion Grid — 12 agent personas with roles
+6. Getting Started — Three-step install flow
+7. Documentation Links — Diplomat Tutorial, Quickstart, Federation Manifesto, Manual
+8. Persona Cards — Solo Developer, CTO, Agency
+9. Connected Journeys — Philosophy section: self-reflective loop, society of mind, haunted house narrative
+10. FAQ — 6 questions with structured data
+11. Newsletter — Email signup waitlist
+12. Footer — Navigation + attribution
 
 ## Docs
 
 - [Overview](https://chrisrijos.github.io/omnipotent-releases/): Product overview and download
-- [GitHub](https://github.com/chrisrijos/omnipotent): Source code and documentation
+- [GitHub](https://github.com/RJS-SOFTWARE-LABS/omnipotent): Source code and documentation
+- [Diplomat Tutorial](https://github.com/RJS-SOFTWARE-LABS/omnipotent/blob/main/docs/DIPLOMAT_TUTORIAL.md): Git-based federation sync
+- [Quickstart](https://github.com/RJS-SOFTWARE-LABS/omnipotent/blob/main/QUICKSTART.md): Full setup walkthrough
+- [Federation Manifesto](https://github.com/RJS-SOFTWARE-LABS/omnipotent/blob/main/docs/FEDERATION_MANIFESTO.md): Airlock Protocol architecture
+- [Mnemosyne Protocol](https://github.com/RJS-SOFTWARE-LABS/omnipotent/blob/main/docs/MNEMOSYNE_PROTOCOL.md): Tiered memory architecture
+- [Manual](https://github.com/RJS-SOFTWARE-LABS/omnipotent/blob/main/docs/MANUAL.md): Complete CLI reference
+- [Design Philosophy](./docs/DESIGN_PHILOSOPHY.md): Merged design system
 
 ## Optional
 
@@ -54,4 +81,4 @@ Pre-built binaries for macOS (.dmg) and Linux are coming soon.
 
 ## Organization
 
-RijoS Software / DuoNode Inc
+RJS Software Labs / DuoNode Inc

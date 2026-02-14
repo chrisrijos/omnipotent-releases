@@ -1,0 +1,2172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Omnipotent — Federated AI Sovereign Operating System | Download</title>
+  <meta name="description" content="Download Omnipotent — a self-healing, multi-agent orchestration platform. Sovereign AI on your hardware. Docker, Deno, Rust. 12 specialized agents. Zero cloud dependencies." />
+  <link rel="canonical" href="https://chrisrijos.github.io/omnipotent-releases/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://chrisrijos.github.io/omnipotent-releases/" />
+  <meta property="og:title" content="Omnipotent — Federated AI Sovereign Operating System" />
+  <meta property="og:description" content="Download Omnipotent — sovereign AI orchestration on your own infrastructure. 12 specialized agents. Zero cloud dependencies." />
+  <meta property="og:site_name" content="Omnipotent" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Omnipotent — Federated AI Sovereign Operating System" />
+  <meta name="twitter:description" content="Self-healing, multi-agent orchestration on your own hardware. 12 specialized agents. Zero cloud dependencies." />
+  <meta name="theme-color" content="#0A0F14" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- JSON-LD: SoftwareApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Omnipotent",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Linux, macOS, Docker",
+    "description": "Federated AI Sovereign Operating System — a self-healing, multi-agent orchestration platform with 12 specialized agents.",
+    "url": "https://chrisrijos.github.io/omnipotent-releases/",
+    "downloadUrl": "https://github.com/chrisrijos/omnipotent-releases/releases/download/v1.0.0/omnipotent-1.0.0-darwin-arm64.tar.gz",
+    "softwareVersion": "1.0.0",
+    "author": {
+      "@type": "Organization",
+      "name": "RijoS Software / DuoNode Inc"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+
+  <!-- JSON-LD: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is Omnipotent?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Omnipotent is a Federated AI Sovereign Operating System with a kernel (Archon), persistent memory (Soul Journal), and constitutional rules (AI_RULES.md), running on Docker. It coordinates 12 specialized AI agent personas through two closed-loop orchestration protocols with mandatory human checkpoints."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I install Omnipotent?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Install via cargo install omnipotent-cli or download the pre-built binary. Requires Docker 24+ and Deno 1.40+."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Omnipotent free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Source code is available on GitHub. Omnipotent is self-hosted with no subscription fees or cloud dependencies."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What agents does it include?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "12 specialized personas: Archon, Oracle, Shadow Route, Validitus, Codex, Eidolon, Artificer, Diplomat, plus 4 sub-roles (Quartermaster, Scout, Mnemon, Mercator)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Omnipotent require an internet connection?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Omnipotent runs fully offline once initialized. The Diplomat agent can optionally sync with federated instances via the opt-in Airlock Protocol."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is this different from LangChain, CrewAI, or AutoGen?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Omnipotent is a complete OS, not a framework. It includes infrastructure (Docker Swarm), a Rust CLI, persistent tiered memory, mandatory human checkpoints, and constitutional governance via AI_RULES.md."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS
+       ============================================================ */
+    :root {
+      --void: #000000;
+      --abyss: #0A0F14;
+      --surface-raised: #1E293B;
+      --surface-overlay: #2D3748;
+      --surface-subtle: rgba(30,41,59,0.15);
+      --surface-terminal: rgba(0,0,0,0.6);
+      --sovereign-gold: #FFD700;
+      --gold-muted: #D4A843;
+      --gold-warm: #E0B850;
+      --cyan: #00D4FF;
+      --matrix-green: #00FF00;
+      --text-primary: #E0E0E0;
+      --text-secondary: #94A3B8;
+      --glass-edge: rgba(0,212,255,0.3);
+      --glass-bg: rgba(30,41,59,0.45);
+      --glass-bg-hover: rgba(30,41,59,0.65);
+
+      --ease-sovereign: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-smooth: cubic-bezier(0.45, 0, 0.55, 1);
+      --dur-fast: 200ms;
+      --dur-normal: 350ms;
+      --dur-slow: 600ms;
+
+      --font-display: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', 'Cascadia Code', 'Fira Code', ui-monospace, monospace;
+
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --space-16: 64px;
+      --space-20: 80px;
+      --space-24: 96px;
+    }
+
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      background: var(--abyss);
+      color: var(--text-primary);
+      font-family: var(--font-display);
+      font-size: clamp(0.9375rem, 0.85rem + 0.25vw, 1.0625rem);
+      font-weight: 400;
+      line-height: 1.7;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* ============================================================
+       TYPOGRAPHY SCALE (Perfect Fourth 1.333)
+       ============================================================ */
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-display);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 2.2rem + 3vw, 4.5rem);
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+    }
+    h2 { font-size: clamp(1.6rem, 1.3rem + 1.5vw, 2.4rem); }
+    h3 { font-size: clamp(1.15rem, 1rem + 0.5vw, 1.5rem); }
+
+    p { max-width: 68ch; }
+
+    a {
+      color: var(--cyan);
+      text-decoration: none;
+      transition: color var(--dur-fast) var(--ease-smooth);
+    }
+    a:hover { color: var(--sovereign-gold); }
+    a:focus-visible {
+      outline: 2px solid var(--sovereign-gold);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
+    code, .mono {
+      font-family: var(--font-mono);
+    }
+
+    /* ============================================================
+       LAYOUT UTILITIES
+       ============================================================ */
+    .container {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 var(--space-5);
+    }
+
+    .container-wide {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 var(--space-5);
+    }
+
+    .section {
+      padding: var(--space-24) 0;
+      position: relative;
+    }
+
+    .section-alt {
+      background: var(--surface-subtle);
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold-muted);
+      padding: var(--space-1) var(--space-3);
+      border: 1px solid rgba(212,168,67,0.25);
+      border-radius: 100px;
+      margin-bottom: var(--space-5);
+      background: rgba(212,168,67,0.06);
+    }
+
+    .section-heading {
+      color: var(--text-primary);
+      margin-bottom: var(--space-4);
+    }
+
+    .section-sub {
+      color: var(--text-secondary);
+      font-size: clamp(0.95rem, 0.85rem + 0.3vw, 1.1rem);
+      max-width: 56ch;
+      margin-bottom: var(--space-10);
+    }
+
+    .section-center {
+      text-align: center;
+    }
+    .section-center .section-label,
+    .section-center .section-heading,
+    .section-center .section-sub {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ============================================================
+       GLASS PANEL
+       ============================================================ */
+    .glass-panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px) saturate(150%);
+      -webkit-backdrop-filter: blur(20px) saturate(150%);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius-lg);
+    }
+
+    /* ============================================================
+       BUTTONS
+       ============================================================ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.01em;
+      padding: var(--space-3) var(--space-8);
+      border-radius: var(--radius-sm);
+      border: none;
+      cursor: pointer;
+      transition: all var(--dur-normal) var(--ease-sovereign);
+      text-decoration: none;
+      white-space: nowrap;
+      min-height: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary {
+      background: var(--sovereign-gold);
+      color: var(--void);
+    }
+    .btn-primary:hover {
+      background: var(--gold-warm);
+      color: var(--void);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 32px rgba(255,215,0,0.2);
+    }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-primary:focus-visible {
+      outline: 2px solid var(--text-primary);
+      outline-offset: 3px;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--sovereign-gold);
+      border: 1.5px solid var(--gold-muted);
+    }
+    .btn-outline:hover {
+      border-color: var(--sovereign-gold);
+      background: rgba(255,215,0,0.06);
+      color: var(--sovereign-gold);
+      transform: translateY(-1px);
+    }
+    .btn-outline:active { transform: translateY(0); }
+    .btn-outline:focus-visible {
+      outline: 2px solid var(--sovereign-gold);
+      outline-offset: 3px;
+    }
+
+    .btn-lg {
+      font-size: 1.05rem;
+      padding: var(--space-4) var(--space-10);
+      min-height: 56px;
+    }
+
+    /* ============================================================
+       SCROLL REVEAL
+       ============================================================ */
+    .sr {
+      opacity: 0;
+      transform: translateY(24px);
+      transition:
+        opacity var(--dur-slow) var(--ease-sovereign),
+        transform var(--dur-slow) var(--ease-sovereign);
+    }
+
+    .sr.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .sr {
+        opacity: 1;
+        transform: none;
+      }
+      .terminal-window .terminal-line {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+
+    /* ============================================================
+       HEADER / NAV
+       ============================================================ */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: var(--space-4) 0;
+      background: rgba(10,15,20,0.8);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      transition: background var(--dur-normal) var(--ease-smooth);
+    }
+    .site-header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .site-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+    .site-logo:hover { color: var(--sovereign-gold); }
+    .site-logo svg { flex-shrink: 0; }
+
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
+    }
+    .site-nav a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      letter-spacing: 0.01em;
+    }
+    .site-nav a:hover { color: var(--text-primary); }
+
+    @media (max-width: 640px) {
+      .site-nav { display: none; }
+    }
+
+    /* ============================================================
+       HERO (centered iloom-style)
+       ============================================================ */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: var(--space-20);
+      padding-bottom: var(--space-16);
+      text-align: center;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 30% 40%, rgba(255,215,0,0.04) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 75% 25%, rgba(0,212,255,0.03) 0%, transparent 60%),
+        radial-gradient(ellipse 80% 80% at 50% 110%, rgba(0,255,0,0.02) 0%, transparent 50%),
+        var(--abyss);
+      pointer-events: none;
+    }
+
+    /* SVG noise grain overlay */
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 256px;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    /* Ouroboros watermark behind hero text */
+    .hero-watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px;
+      height: 500px;
+      opacity: 0.06;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes ouroboros-rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .ouroboros-ring {
+      animation: ouroboros-rotate 60s linear infinite;
+      transform-origin: 250px 250px;
+    }
+
+    @keyframes ouroboros-pulse {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 1; }
+    }
+    .ouroboros-glow {
+      animation: ouroboros-pulse 4s ease-in-out infinite;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      color: var(--text-primary);
+      margin-bottom: var(--space-6);
+      text-shadow: 0 0 80px rgba(255,215,0,0.08);
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--sovereign-gold);
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 0.9rem + 0.4vw, 1.15rem);
+      color: var(--text-secondary);
+      margin: 0 auto var(--space-10);
+      max-width: 52ch;
+      font-weight: 400;
+      line-height: 1.7;
+    }
+
+    /* Hero install code block */
+    .hero-install {
+      max-width: 560px;
+      margin: 0 auto var(--space-6);
+      position: relative;
+    }
+
+    .hero-install-code {
+      display: flex;
+      align-items: center;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-md);
+      padding: var(--space-4) var(--space-5);
+      padding-right: var(--space-12);
+      overflow-x: auto;
+    }
+
+    .hero-install-code code {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--cyan);
+      white-space: pre;
+      line-height: 1.6;
+    }
+
+    .hero-install-code .prompt {
+      color: var(--sovereign-gold);
+    }
+
+    .hero-copy-btn {
+      position: absolute;
+      top: 50%;
+      right: var(--space-3);
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-sm);
+      padding: var(--space-2);
+      cursor: pointer;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--dur-fast) var(--ease-smooth);
+      min-width: 36px;
+      min-height: 36px;
+    }
+    .hero-copy-btn:hover {
+      background: rgba(255,255,255,0.1);
+      color: var(--sovereign-gold);
+      border-color: var(--gold-muted);
+    }
+    .hero-copy-btn:focus-visible {
+      outline: 2px solid var(--sovereign-gold);
+      outline-offset: 3px;
+    }
+    .hero-copy-btn.copied {
+      color: var(--matrix-green);
+      border-color: rgba(0,255,0,0.3);
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      justify-content: center;
+    }
+
+    /* ============================================================
+       TRUST BAR
+       ============================================================ */
+    .trust-bar {
+      padding: var(--space-12) 0;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      background: rgba(0,0,0,0.2);
+    }
+
+    .trust-label {
+      display: block;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(148,163,184,0.5);
+      margin-bottom: var(--space-6);
+    }
+
+    .trust-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: var(--space-10);
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color var(--dur-fast) var(--ease-smooth);
+    }
+
+    .trust-item svg {
+      width: 24px;
+      height: 24px;
+      opacity: 0.6;
+      transition: opacity var(--dur-fast) var(--ease-smooth), filter var(--dur-fast) var(--ease-smooth);
+    }
+
+    .trust-item:hover {
+      color: var(--text-primary);
+    }
+    .trust-item:hover svg {
+      opacity: 1;
+      filter: drop-shadow(0 0 6px currentColor);
+    }
+
+    /* ============================================================
+       TERMINAL DEMO
+       ============================================================ */
+    .terminal-section {
+      padding: var(--space-24) 0;
+      position: relative;
+    }
+
+    .terminal-window {
+      max-width: 720px;
+      margin: 0 auto;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: var(--surface-terminal);
+      backdrop-filter: blur(20px) saturate(150%);
+      -webkit-backdrop-filter: blur(20px) saturate(150%);
+    }
+
+    .terminal-titlebar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-4);
+      background: rgba(30,41,59,0.6);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .terminal-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    .terminal-dot--red { background: #EF4444; }
+    .terminal-dot--yellow { background: #EAB308; }
+    .terminal-dot--green { background: #22C55E; }
+
+    .terminal-title {
+      flex: 1;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      letter-spacing: 0.04em;
+    }
+
+    .terminal-body {
+      padding: var(--space-5) var(--space-6);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      line-height: 1.8;
+    }
+
+    .terminal-line {
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.4s var(--ease-sovereign), transform 0.4s var(--ease-sovereign);
+      white-space: pre;
+    }
+
+    .terminal-window.visible .terminal-line {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .terminal-line .t-cmd { color: var(--sovereign-gold); font-weight: 700; }
+    .terminal-line .t-ok { color: var(--matrix-green); }
+    .terminal-line .t-agent { color: var(--cyan); }
+    .terminal-line .t-muted { color: var(--text-secondary); }
+    .terminal-line .t-gold { color: var(--sovereign-gold); font-weight: 700; }
+    .terminal-line .t-status { color: var(--matrix-green); font-weight: 500; }
+
+    .terminal-gap {
+      height: var(--space-4);
+    }
+
+    @keyframes blink-cursor {
+      50% { opacity: 0; }
+    }
+    .terminal-cursor {
+      display: inline-block;
+      width: 8px;
+      height: 1.1em;
+      background: var(--sovereign-gold);
+      vertical-align: text-bottom;
+      animation: blink-cursor 1s step-end infinite;
+      margin-left: 2px;
+    }
+
+    /* ============================================================
+       BENEFITS GRID
+       ============================================================ */
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-5);
+    }
+
+    @media (min-width: 720px) {
+      .benefits-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (min-width: 1024px) {
+      .benefits-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .benefit-card {
+      background: rgba(30,41,59,0.25);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: var(--radius-md);
+      padding: var(--space-6);
+      border-left: 3px solid transparent;
+      transition: all var(--dur-normal) var(--ease-sovereign);
+    }
+
+    .benefit-card:hover {
+      background: rgba(30,41,59,0.4);
+      transform: translateY(-2px);
+    }
+
+    .benefit-card[data-accent="gold"]  { border-left-color: var(--sovereign-gold); }
+    .benefit-card[data-accent="cyan"]  { border-left-color: var(--cyan); }
+    .benefit-card[data-accent="green"] { border-left-color: var(--matrix-green); }
+
+    .benefit-card[data-accent="gold"]:hover  { box-shadow: 0 4px 24px rgba(255,215,0,0.06); }
+    .benefit-card[data-accent="cyan"]:hover  { box-shadow: 0 4px 24px rgba(0,212,255,0.06); }
+    .benefit-card[data-accent="green"]:hover { box-shadow: 0 4px 24px rgba(0,255,0,0.04); }
+
+    .benefit-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--space-4);
+    }
+
+    .benefit-card[data-accent="gold"] .benefit-icon {
+      background: rgba(255,215,0,0.08);
+      color: var(--sovereign-gold);
+      border: 1px solid rgba(255,215,0,0.15);
+    }
+    .benefit-card[data-accent="cyan"] .benefit-icon {
+      background: rgba(0,212,255,0.08);
+      color: var(--cyan);
+      border: 1px solid rgba(0,212,255,0.15);
+    }
+    .benefit-card[data-accent="green"] .benefit-icon {
+      background: rgba(0,255,0,0.06);
+      color: var(--matrix-green);
+      border: 1px solid rgba(0,255,0,0.12);
+    }
+
+    .benefit-card h3 {
+      font-size: clamp(1rem, 0.95rem + 0.25vw, 1.15rem);
+      margin-bottom: var(--space-2);
+    }
+
+    .benefit-card p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+
+    /* ============================================================
+       LEGION GRID
+       ============================================================ */
+    .legion-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-4);
+    }
+
+    @media (min-width: 720px) {
+      .legion-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    @media (min-width: 1024px) {
+      .legion-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .legion-card {
+      background: rgba(30,41,59,0.3);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: var(--radius-md);
+      padding: var(--space-4) var(--space-4);
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      transition: all var(--dur-normal) var(--ease-sovereign);
+    }
+
+    .legion-card:hover {
+      background: rgba(30,41,59,0.5);
+      border-color: rgba(255,255,255,0.08);
+      transform: translateY(-2px);
+    }
+
+    .legion-sigil {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+    }
+
+    .legion-card .legion-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+
+    .legion-card .legion-role {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    /* Sigil colors */
+    .sigil-red    { background: rgba(239,68,68,0.12); color: #EF4444; border: 1px solid rgba(239,68,68,0.2); }
+    .sigil-blue   { background: rgba(59,130,246,0.12); color: #3B82F6; border: 1px solid rgba(59,130,246,0.2); }
+    .sigil-purple { background: rgba(168,85,247,0.12); color: #A855F7; border: 1px solid rgba(168,85,247,0.2); }
+    .sigil-green  { background: rgba(34,197,94,0.12); color: #22C55E; border: 1px solid rgba(34,197,94,0.2); }
+    .sigil-gold   { background: rgba(234,179,8,0.12); color: #EAB308; border: 1px solid rgba(234,179,8,0.2); }
+    .sigil-cyan   { background: rgba(0,212,255,0.12); color: var(--cyan); border: 1px solid rgba(0,212,255,0.2); }
+    .sigil-gray   { background: rgba(148,163,184,0.12); color: var(--text-secondary); border: 1px solid rgba(148,163,184,0.2); }
+
+    /* ============================================================
+       GETTING STARTED
+       ============================================================ */
+    .steps-list {
+      max-width: 640px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-10);
+    }
+
+    .step {
+      display: flex;
+      gap: var(--space-5);
+    }
+
+    .step-number {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255,215,0,0.1);
+      border: 1.5px solid var(--gold-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--sovereign-gold);
+    }
+
+    .step-content h3 {
+      margin-bottom: var(--space-2);
+    }
+
+    .step-content p {
+      color: var(--text-secondary);
+      font-size: 0.92rem;
+      line-height: 1.65;
+      margin-bottom: var(--space-4);
+    }
+
+    .step-code {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius-sm);
+      padding: var(--space-3) var(--space-4);
+      overflow-x: auto;
+    }
+
+    .step-code code {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--cyan);
+      white-space: pre;
+      line-height: 1.6;
+    }
+
+    .step-link {
+      display: inline-block;
+      margin-top: var(--space-3);
+      font-size: 0.85rem;
+      color: var(--cyan);
+      border-bottom: 1px solid rgba(0,212,255,0.3);
+    }
+    .step-link:hover {
+      color: var(--sovereign-gold);
+      border-bottom-color: rgba(255,215,0,0.3);
+    }
+
+    /* ============================================================
+       DOCS LINKS
+       ============================================================ */
+    .docs-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+      max-width: 640px;
+      margin: var(--space-10) auto 0;
+    }
+
+    @media (min-width: 720px) {
+      .docs-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .docs-link {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-4) var(--space-5);
+      background: rgba(30,41,59,0.2);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      text-decoration: none;
+      transition: all var(--dur-normal) var(--ease-sovereign);
+    }
+
+    .docs-link:hover {
+      background: rgba(30,41,59,0.4);
+      border-color: rgba(0,212,255,0.3);
+      transform: translateY(-2px);
+    }
+
+    .docs-link-icon {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+    }
+
+    .docs-link-icon--gold { background: rgba(255,215,0,0.1); color: var(--sovereign-gold); border: 1px solid rgba(255,215,0,0.2); }
+    .docs-link-icon--cyan { background: rgba(0,212,255,0.1); color: var(--cyan); border: 1px solid rgba(0,212,255,0.2); }
+    .docs-link-icon--green { background: rgba(0,255,0,0.1); color: var(--matrix-green); border: 1px solid rgba(0,255,0,0.2); }
+
+    .docs-link-text h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .docs-link-text p {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    /* ============================================================
+       PHILOSOPHY / CONNECTED JOURNEYS
+       ============================================================ */
+    .philosophy-content {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .philosophy-card {
+      background: rgba(30,41,59,0.15);
+      border: 1px solid rgba(255,215,0,0.08);
+      border-radius: var(--radius-lg);
+      padding: var(--space-10) var(--space-8);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .philosophy-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--sovereign-gold), var(--cyan), var(--matrix-green));
+      opacity: 0.5;
+    }
+
+    .philosophy-pillars {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+      margin-bottom: var(--space-8);
+    }
+
+    @media (min-width: 720px) {
+      .philosophy-pillars {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .philosophy-pillar {
+      text-align: center;
+    }
+
+    .philosophy-pillar-icon {
+      font-size: 1.6rem;
+      margin-bottom: var(--space-3);
+    }
+
+    .philosophy-pillar h4 {
+      font-size: 0.95rem;
+      margin-bottom: var(--space-2);
+      color: var(--text-primary);
+    }
+
+    .philosophy-pillar p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    .philosophy-quote {
+      border-left: 3px solid var(--sovereign-gold);
+      padding-left: var(--space-6);
+      margin: var(--space-8) 0 var(--space-4);
+      font-style: italic;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      font-size: 0.92rem;
+    }
+
+    .philosophy-attribution {
+      text-align: right;
+      font-size: 0.8rem;
+      color: var(--gold-muted);
+      font-style: italic;
+    }
+
+    .philosophy-citations {
+      margin-top: var(--space-6);
+      padding-top: var(--space-4);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      opacity: 0.7;
+    }
+
+    /* ============================================================
+       PERSONA CARDS
+       ============================================================ */
+    .persona-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+
+    @media (min-width: 720px) {
+      .persona-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .persona-card {
+      background: rgba(30,41,59,0.2);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8);
+      transition: all var(--dur-normal) var(--ease-sovereign);
+    }
+
+    .persona-card:hover {
+      background: rgba(30,41,59,0.35);
+      transform: translateY(-3px);
+      border-color: rgba(255,255,255,0.08);
+    }
+
+    .persona-badge {
+      display: inline-flex;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: var(--space-1) var(--space-3);
+      border-radius: 100px;
+      margin-bottom: var(--space-5);
+    }
+
+    .persona-badge--gold {
+      color: var(--sovereign-gold);
+      background: rgba(255,215,0,0.08);
+      border: 1px solid rgba(255,215,0,0.2);
+    }
+    .persona-badge--cyan {
+      color: var(--cyan);
+      background: rgba(0,212,255,0.08);
+      border: 1px solid rgba(0,212,255,0.2);
+    }
+    .persona-badge--green {
+      color: var(--matrix-green);
+      background: rgba(0,255,0,0.06);
+      border: 1px solid rgba(0,255,0,0.15);
+    }
+
+    .persona-card h3 {
+      margin-bottom: var(--space-3);
+    }
+
+    .persona-lead {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      margin-bottom: var(--space-3);
+      line-height: 1.55;
+    }
+
+    .persona-body {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    /* ============================================================
+       FAQ
+       ============================================================ */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius-md);
+      background: rgba(30,41,59,0.25);
+      overflow: hidden;
+      border-left: 3px solid transparent;
+      transition: border-color var(--dur-fast) var(--ease-smooth);
+    }
+
+    .faq-item:hover {
+      border-left-color: var(--gold-muted);
+    }
+
+    .faq-item[open] {
+      border-left-color: var(--sovereign-gold);
+    }
+
+    .faq-item summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      padding: var(--space-5) var(--space-6);
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      list-style: none;
+      transition: background var(--dur-fast) var(--ease-smooth);
+      min-height: 48px;
+    }
+
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::marker { display: none; content: ''; }
+
+    .faq-item summary:hover {
+      background: rgba(30,41,59,0.4);
+    }
+
+    .faq-item summary:focus-visible {
+      outline: 2px solid var(--sovereign-gold);
+      outline-offset: -2px;
+      border-radius: var(--radius-md);
+    }
+
+    .faq-chevron {
+      width: 20px;
+      height: 20px;
+      color: var(--text-secondary);
+      flex-shrink: 0;
+      transition: transform var(--dur-normal) var(--ease-sovereign);
+    }
+
+    .faq-item[open] .faq-chevron {
+      transform: rotate(180deg);
+    }
+
+    .faq-answer {
+      padding: 0 var(--space-6) var(--space-6);
+      color: var(--text-secondary);
+      font-size: 0.92rem;
+      line-height: 1.7;
+    }
+
+    .faq-answer code {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--cyan);
+      background: rgba(0,0,0,0.3);
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+
+    /* ============================================================
+       NEWSLETTER
+       ============================================================ */
+    .newsletter-card {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: var(--space-10);
+      text-align: center;
+    }
+
+    .newsletter-card h2 {
+      color: var(--sovereign-gold);
+      margin-bottom: var(--space-3);
+    }
+
+    .newsletter-sub {
+      color: var(--text-secondary);
+      font-size: 0.92rem;
+      max-width: 48ch;
+      margin: 0 auto var(--space-8);
+      line-height: 1.65;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: var(--space-3);
+      max-width: 420px;
+      margin: 0 auto var(--space-5);
+    }
+
+    .newsletter-input {
+      flex: 1;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-sm);
+      padding: var(--space-3) var(--space-4);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--text-primary);
+      min-height: 48px;
+      transition: border-color var(--dur-fast) var(--ease-smooth);
+    }
+
+    .newsletter-input::placeholder {
+      color: var(--text-secondary);
+      opacity: 0.6;
+    }
+
+    .newsletter-input:focus {
+      outline: none;
+      border-color: var(--sovereign-gold);
+      box-shadow: 0 0 0 3px rgba(255,215,0,0.1);
+    }
+
+    .newsletter-form .btn {
+      flex-shrink: 0;
+    }
+
+    .newsletter-privacy {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      color: rgba(148,163,184,0.5);
+    }
+
+    @media (max-width: 480px) {
+      .newsletter-form {
+        flex-direction: column;
+      }
+    }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    .site-footer {
+      padding: var(--space-8) 0;
+      border-top: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-5);
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+    .footer-brand svg { opacity: 0.5; }
+
+    .footer-nav {
+      display: flex;
+      align-items: center;
+      gap: var(--space-5);
+    }
+
+    .footer-nav a {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+    .footer-nav a:hover { color: var(--text-primary); }
+
+    .footer-right {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(148,163,184,0.5);
+      text-align: right;
+    }
+
+    .footer-right span {
+      display: block;
+    }
+
+    @media (max-width: 640px) {
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+      .footer-nav {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .footer-right {
+        text-align: center;
+      }
+    }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 640px) {
+      .section { padding: var(--space-16) 0; }
+      .hero { padding-top: var(--space-16); }
+      .hero-ctas { flex-direction: column; }
+      .hero-ctas .btn { width: 100%; }
+      .trust-row { gap: var(--space-6); }
+      .hero-watermark {
+        width: 300px;
+        height: 300px;
+      }
+    }
+
+    @media (min-width: 1100px) {
+      .hero-content {
+        max-width: 860px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       HEADER
+       ============================================================ -->
+  <header class="site-header" role="banner">
+    <div class="container">
+      <a href="#" class="site-logo" aria-label="Omnipotent Home">
+        <svg width="28" height="28" viewBox="0 0 500 500" fill="none" aria-hidden="true">
+          <circle cx="250" cy="250" r="200" stroke="#D4A843" stroke-width="8" opacity="0.3"/>
+          <path d="M 250,80 A 170,170 0 1,1 249,80" fill="none" stroke="#FFD700" stroke-width="10" stroke-linecap="round"/>
+          <polygon points="240,68 268,80 240,92" fill="#FFD700"/>
+          <rect x="220" y="220" width="60" height="60" rx="8" fill="#1E293B" stroke="#94A3B8" stroke-width="4"/>
+          <text x="250" y="259" fill="#E0E0E0" font-family="monospace" font-size="32" text-anchor="middle" font-weight="bold">&#x221E;</text>
+        </svg>
+        OMNIPOTENT
+      </a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="#features">Features</a>
+        <a href="#legion">The Legion</a>
+        <a href="#install">Install</a>
+        <a href="#faq">FAQ</a>
+        <a href="#docs">Docs</a>
+        <a href="https://github.com/chrisrijos/omnipotent" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+
+  <main id="main-content">
+
+    <!-- ============================================================
+         HERO (centered, iloom-style)
+         ============================================================ -->
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="hero-bg" aria-hidden="true"></div>
+
+      <!-- Ouroboros watermark -->
+      <div class="hero-watermark" aria-hidden="true">
+        <svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+          <circle cx="250" cy="250" r="220" stroke="rgba(255,215,0,0.15)" stroke-width="40" class="ouroboros-glow"/>
+          <g class="ouroboros-ring">
+            <circle cx="250" cy="250" r="180" stroke="rgba(30,41,59,0.6)" stroke-width="3"/>
+            <path d="M 250,70 A 180,180 0 1,1 249,70" fill="none" stroke="url(#goldStrokeHero)" stroke-width="5" stroke-linecap="round"/>
+            <polygon points="240,58 262,70 240,82" fill="#FFD700"/>
+            <defs>
+              <linearGradient id="goldStrokeHero" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#D4A843" stop-opacity="0.3"/>
+                <stop offset="50%" stop-color="#FFD700"/>
+                <stop offset="100%" stop-color="#D4A843" stop-opacity="0.3"/>
+              </linearGradient>
+            </defs>
+            <text fill="#94A3B8" font-family="monospace" font-size="13" letter-spacing="3" font-weight="500">
+              <path id="textArcHero" d="M 250,70 A 180,180 0 1,1 249,70"/>
+              <textPath href="#textArcHero" startOffset="15%">SELF-UPDATING</textPath>
+            </text>
+            <text fill="#94A3B8" font-family="monospace" font-size="13" letter-spacing="3" font-weight="500">
+              <textPath href="#textArcHero" startOffset="48%">SELF-HEALING</textPath>
+            </text>
+            <text fill="#94A3B8" font-family="monospace" font-size="13" letter-spacing="3" font-weight="500">
+              <textPath href="#textArcHero" startOffset="78%">SOVEREIGN</textPath>
+            </text>
+          </g>
+          <rect x="210" y="210" width="80" height="80" rx="12" fill="#1E293B" stroke="#94A3B8" stroke-width="1.5"/>
+          <text x="250" y="260" fill="#FFD700" font-family="monospace" font-size="36" text-anchor="middle" font-weight="bold">&#x221E;</text>
+        </svg>
+      </div>
+
+      <div class="container">
+        <div class="hero-content">
+          <span class="section-label sr" style="--sr-delay:0ms">Federated AI Sovereign OS</span>
+          <h1 id="hero-heading" class="sr" style="--sr-delay:80ms">Your AI agents answer to a SaaS. Shouldn't they <em>answer to you?</em></h1>
+          <p class="hero-subtitle sr" style="--sr-delay:160ms">Omnipotent is a self-healing, multi-agent orchestration platform that runs entirely on your hardware. 12 specialized agents. Zero cloud dependencies. Total sovereignty.</p>
+
+          <!-- Primary CTA: copyable install command -->
+          <div class="hero-install sr" style="--sr-delay:220ms">
+            <div class="hero-install-code">
+              <code><span class="prompt">$</span> cargo install omnipotent-cli &amp;&amp; omnipotent init</code>
+            </div>
+            <button class="hero-copy-btn" type="button" aria-label="Copy install command" data-copy="cargo install omnipotent-cli && omnipotent init">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+            </button>
+          </div>
+
+          <div class="hero-ctas sr" style="--sr-delay:300ms">
+            <a href="https://github.com/chrisrijos/omnipotent-releases/releases/download/v1.0.0/omnipotent-1.0.0-darwin-arm64.tar.gz" class="btn btn-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download Binary (macOS arm64)
+            </a>
+            <a href="https://github.com/chrisrijos/omnipotent" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+              View Source
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         TRUST BAR
+         ============================================================ -->
+    <section class="trust-bar" aria-label="Technology stack">
+      <div class="container">
+        <span class="trust-label sr" style="--sr-delay:0ms">Built With</span>
+        <div class="trust-row sr" style="--sr-delay:60ms">
+          <!-- Docker -->
+          <div class="trust-item">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 3.5h2v2h-2zm-3 0h2v2h-2zm-3 0h2v2H7zm-3 3h2v2H4zm3 0h2v2H7zm3 0h2v2h-2zm3 0h2v2h-2zm3 0h2v2h-2zm3 0h2v2h-2zM4 9.5h2v2H4zm3 0h2v2H7zm3 0h2v2h-2zm3 0h2v2h-2zm5.8.5c-.5-.3-1.7-.5-2.5-.2-.2-1.2-.9-2.3-1.8-2.8l-.4-.2-.2.4c-.4.7-.5 1.8-.2 2.5.2.5.6 1 1 1.3-.5.3-1.5.5-2.3.5H.5l-.1.6c-.2 2 .3 4 1.4 5.6C2.9 19 4.7 20 7.2 20c5.2 0 9.1-2.4 10.9-6.8.7 0 2.2 0 3-1.5l.2-.4-.6-.3z"/></svg>
+            Docker
+          </div>
+          <!-- Deno -->
+          <div class="trust-item">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c6.627 0 12 5.373 12 12s-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0zm-.469 6.793c-3.49 0-5.54 2.694-5.54 5.41 0 3.78 2.857 5.63 5.58 5.63.386 0 .702-.032.702-.032l.023-1.79s-.367.042-.674.042c-1.872 0-2.727-1.412-2.727-2.922v-.06c.51.36 1.735.69 2.838.69 2.672 0 4.634-1.582 4.634-4.153C16.367 8.1 14.192 6.793 11.531 6.793zm.114 1.583c1.514 0 2.454.882 2.454 2.055 0 1.315-1.056 2.16-2.582 2.16-1.11 0-2.08-.436-2.08-1.085 0-1.517 1.124-3.13 2.208-3.13z"/></svg>
+            Deno
+          </div>
+          <!-- Rust -->
+          <div class="trust-item">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.835 11.703l-1.008-.622.066-.2a9.981 9.981 0 00.323-2.084l.007-.214-1.14-.329-.009-.118a9.924 9.924 0 00-.652-2.543l-.068-.174-.005-.012 1.005-.623-.367-.804-1.14.328-.121-.156a10.036 10.036 0 00-1.783-1.877l-.147-.12.329-1.14-.804-.366-.621 1.007-.2-.066a9.983 9.983 0 00-2.084-.324l-.214-.006-.329-1.14h-.877l-.329 1.14-.119.01a9.906 9.906 0 00-2.543.651l-.175.069-.012.005-.622-1.005-.805.367.329 1.139-.156.121a10.03 10.03 0 00-1.877 1.783l-.12.147-1.14-.329-.367.805 1.008.621-.066.2a9.97 9.97 0 00-.324 2.084l-.006.214-1.14.329v.877l1.14.329.01.118a9.916 9.916 0 00.651 2.544l.069.175.005.012-1.005.621.367.805 1.14-.329.12.157a10.028 10.028 0 001.783 1.876l.147.12-.329 1.14.805.367.621-1.008.2.067a9.98 9.98 0 002.084.323l.214.007.329 1.14h.877l.329-1.14.118-.01a9.906 9.906 0 002.544-.651l.175-.069.012-.005.621 1.005.805-.367-.329-1.139.157-.121a10.028 10.028 0 001.876-1.783l.12-.147 1.14.329.367-.805zM12 17.2a5.2 5.2 0 110-10.4 5.2 5.2 0 010 10.4z"/></svg>
+            Rust
+          </div>
+          <!-- Redis -->
+          <div class="trust-item">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10.5 2.661l.54.997-1.797.644 2.409.218.748 1.246.467-1.397 2.326-.252-1.851-.627.606-1.105-1.738.755zm10.633 7.426c-.454.2-2.794 1.19-3.112 1.332-.318.142-.493.141-.672.031-.179-.11-2.476-1.019-2.747-1.14-.271-.12-.37-.2-.17-.357.201-.156 2.157-.884 2.37-.976.214-.091.316-.075.461.011.146.086 2.258.94 2.476 1.041.218.1.318.167-.024.35-.343.183-2.587 1.105-2.587 1.105l.005-.397zM12 21.5c-5.523 0-10-2.463-10-5.5V8c0-3.037 4.477-5.5 10-5.5S22 4.963 22 8v8c0 3.037-4.477 5.5-10 5.5z" opacity="0.3"/><path d="M12 3.5c4.694 0 9 1.963 9 4.5s-4.306 4.5-9 4.5S3 10.537 3 8s4.306-4.5 9-4.5z"/></svg>
+            Redis
+          </div>
+          <!-- PostgreSQL -->
+          <div class="trust-item">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.128 0a10.134 10.134 0 00-2.755.403l-.063.02A10.922 10.922 0 0012.6.258C11.422.238 10.418.524 9.588 1 8.236.456 6.545.163 5.235.305 3.584.49 2.28 1.22 1.64 2.647.373 5.482 1.127 9.122 2.666 11.862c.77 1.37 1.761 2.403 2.873 2.705.44.12.89.063 1.265-.148.373-.21.66-.543.833-.964.037-.09.047-.152.07-.228a.99.99 0 00.303.152c.378.128.773.12 1.147-.023.198-.076.38-.19.538-.332.006.032.01.063.018.094.048.202.12.395.216.572l.015.028a2.827 2.827 0 00.116.188l.019.028c.023.033.048.064.073.096.057.072.12.14.187.204l.02.02a2.42 2.42 0 00.683.463l.008.003.025.01c.074.03.15.055.228.076.242.063.495.076.74.04.49-.073.905-.34 1.133-.736a4.232 4.232 0 00.272-.667c.074-.234.13-.476.168-.72.09-.576.091-1.196.043-1.752.153.05.32.102.486.125.68.098 1.326-.068 1.822-.378a.978.978 0 00.284.103c.327.072.71-.003 1.064-.266.354-.262.673-.668.937-1.134.527-.933.89-2.14.863-3.046l-.002-.07c.38-.97.62-2.14.68-3.53.073-1.668-.334-2.79-1.235-3.526A4.466 4.466 0 0017.128 0z" opacity="0.6"/></svg>
+            PostgreSQL
+          </div>
+          <!-- Graphiti -->
+          <div class="trust-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="18" r="3"/><line x1="8.5" y1="7.5" x2="15.5" y2="16.5"/><line x1="15.5" y1="7.5" x2="8.5" y2="16.5"/></svg>
+            Graphiti
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         TERMINAL DEMO
+         ============================================================ -->
+    <section class="section section-center terminal-section" id="demo" aria-labelledby="demo-heading">
+      <div class="container">
+        <span class="section-label sr" style="--sr-delay:0ms">See It In Action</span>
+        <h2 id="demo-heading" class="section-heading sr" style="--sr-delay:60ms">Two commands. Twelve agents. Full sovereignty.</h2>
+        <p class="section-sub sr" style="--sr-delay:120ms">From zero to a running AI orchestration swarm in under two minutes.</p>
+
+        <div class="terminal-window sr" style="--sr-delay:180ms">
+          <div class="terminal-titlebar" aria-hidden="true">
+            <span class="terminal-dot terminal-dot--red"></span>
+            <span class="terminal-dot terminal-dot--yellow"></span>
+            <span class="terminal-dot terminal-dot--green"></span>
+            <span class="terminal-title">omnipotent-cli</span>
+          </div>
+          <div class="terminal-body">
+            <div class="terminal-line" style="transition-delay:0.3s"><span class="t-cmd">$ omnipotent init</span></div>
+            <div class="terminal-line" style="transition-delay:0.7s">  <span class="t-ok">&#x2714;</span> <span class="t-muted">Scanning Docker environment...</span></div>
+            <div class="terminal-line" style="transition-delay:1.1s">  <span class="t-ok">&#x2714;</span> <span class="t-muted">Generating sovereign configuration...</span></div>
+            <div class="terminal-line" style="transition-delay:1.5s">  <span class="t-ok">&#x2714;</span> <span class="t-muted">Initializing 12 agent personas...</span></div>
+            <div class="terminal-line" style="transition-delay:1.9s">  <span class="t-ok">&#x2714;</span> <span class="t-muted">Mounting tiered memory (Hot/Cold/Federated)...</span></div>
+            <div class="terminal-line" style="transition-delay:2.3s">  <span class="t-ok">&#x2714;</span> <span class="t-muted">Signal Bus ready on omnipotent:bus:*</span></div>
+            <div class="terminal-line" style="transition-delay:2.7s">  <span class="t-ok">&#x2714;</span> <span class="t-muted">Sovereignty established.</span></div>
+            <div class="terminal-line terminal-gap" style="transition-delay:3.1s" aria-hidden="true"></div>
+            <div class="terminal-line" style="transition-delay:3.5s"><span class="t-cmd">$ omnipotent up</span></div>
+            <div class="terminal-line" style="transition-delay:3.9s">  <span class="t-muted">&#x2BFF;</span> <span class="t-agent">Archon</span> <span class="t-muted">..............</span> <span class="t-status">running</span>  <span class="t-muted">(kernel)</span></div>
+            <div class="terminal-line" style="transition-delay:4.3s">  <span class="t-muted">&#x2BFF;</span> <span class="t-agent">Oracle</span> <span class="t-muted">..............</span> <span class="t-status">running</span>  <span class="t-muted">(intel)</span></div>
+            <div class="terminal-line" style="transition-delay:4.7s">  <span class="t-muted">&#x2BFF;</span> <span class="t-agent">Shadow Route</span> <span class="t-muted">........</span> <span class="t-status">running</span>  <span class="t-muted">(orchestration)</span></div>
+            <div class="terminal-line" style="transition-delay:5.1s">  <span class="t-muted">&#x2BFF;</span> <span class="t-agent">Validitus</span> <span class="t-muted">...........</span> <span class="t-status">running</span>  <span class="t-muted">(security)</span></div>
+            <div class="terminal-line" style="transition-delay:5.5s">  <span class="t-muted">&#x2BFF;</span> <span class="t-agent">Codex</span> <span class="t-muted">...............</span> <span class="t-status">running</span>  <span class="t-muted">(truth)</span></div>
+            <div class="terminal-line" style="transition-delay:5.9s">  <span class="t-muted">&#x2BFF;</span> <span class="t-agent">Eidolon</span> <span class="t-muted">.............</span> <span class="t-status">running</span>  <span class="t-muted">(creative)</span></div>
+            <div class="terminal-line terminal-gap" style="transition-delay:6.3s" aria-hidden="true"></div>
+            <div class="terminal-line" style="transition-delay:6.7s">  <span class="t-gold">&#x2726; The Legion is online. Awaiting your command, Emperor.</span><span class="terminal-cursor" aria-hidden="true"></span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         BENEFITS GRID
+         ============================================================ -->
+    <section class="section section-alt" id="features" aria-labelledby="features-heading">
+      <div class="container">
+        <span class="section-label sr" style="--sr-delay:0ms">Why Omnipotent</span>
+        <h2 id="features-heading" class="section-heading sr" style="--sr-delay:60ms">Sovereign by design. Autonomous by nature.</h2>
+
+        <div class="benefits-grid">
+          <!-- 1. Gold: Hardware sovereignty -->
+          <article class="benefit-card sr" style="--sr-delay:80ms" data-accent="gold">
+            <div class="benefit-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
+            </div>
+            <h3>Your hardware, your agents</h3>
+            <p>No SaaS dependencies. Every agent runs on infrastructure you own. Your data never leaves your sovereignty.</p>
+          </article>
+
+          <!-- 2. Cyan: Self-healing -->
+          <article class="benefit-card sr" style="--sr-delay:140ms" data-accent="cyan">
+            <div class="benefit-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+            </div>
+            <h3>Self-healing runtime</h3>
+            <p>The Ouroboros Protocol automatically detects failures, swaps containers, and self-updates with zero downtime.</p>
+          </article>
+
+          <!-- 3. Green: Memory -->
+          <article class="benefit-card sr" style="--sr-delay:200ms" data-accent="green">
+            <div class="benefit-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+            </div>
+            <h3>Memory that compounds</h3>
+            <p>Hot, Cold, and Federated memory tiers with Graphiti temporal knowledge graphs. Your agents learn and remember.</p>
+          </article>
+
+          <!-- 4. Gold: Two-loop -->
+          <article class="benefit-card sr" style="--sr-delay:260ms" data-accent="gold">
+            <div class="benefit-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 01-9 9"/></svg>
+            </div>
+            <h3>Two-loop orchestration</h3>
+            <p>Planning Loop and Execution Loop with mandatory human checkpoints. Perceive, plan, execute, reflect.</p>
+          </article>
+
+          <!-- 5. Cyan: Security -->
+          <article class="benefit-card sr" style="--sr-delay:320ms" data-accent="cyan">
+            <div class="benefit-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h3>Security-first constitution</h3>
+            <p>AI_RULES.md governs every action. Validitus audits every commit. Sovereignty enforcement is non-negotiable.</p>
+          </article>
+
+          <!-- 6. Green: 12 agents -->
+          <article class="benefit-card sr" style="--sr-delay:380ms" data-accent="green">
+            <div class="benefit-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            <h3>12 agents, one emperor</h3>
+            <p>A coordinated Legion of specialized AI personas -- each with a defined role, clear boundaries, and a named identity.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         THE LEGION
+         ============================================================ -->
+    <section class="section" id="legion" aria-labelledby="legion-heading">
+      <div class="container-wide section-center">
+        <span class="section-label sr" style="--sr-delay:0ms">The Legion</span>
+        <h2 id="legion-heading" class="section-heading sr" style="--sr-delay:60ms">12 specialized agents. One chain of command.</h2>
+        <p class="section-sub sr" style="--sr-delay:120ms">Every agent has a name, a role, and boundaries. You are the Emperor.</p>
+      </div>
+      <div class="container-wide">
+        <div class="legion-grid">
+          <article class="legion-card sr" style="--sr-delay:80ms">
+            <div class="legion-sigil sigil-red" aria-hidden="true">A</div>
+            <div><div class="legion-name">Archon</div><div class="legion-role">Kernel Architect</div></div>
+          </article>
+          <article class="legion-card sr" style="--sr-delay:120ms">
+            <div class="legion-sigil sigil-blue" aria-hidden="true">O</div>
+            <div><div class="legion-name">Oracle</div><div class="legion-role">Intel &amp; Research</div></div>
+          </article>
+          <article class="legion-card sr" style="--sr-delay:160ms">
+            <div class="legion-sigil sigil-purple" aria-hidden="true">S</div>
+            <div><div class="legion-name">Shadow Route</div><div class="legion-role">Orchestration</div></div>
+          </article>
+          <article class="legion-card sr" style="--sr-delay:200ms">
+            <div class="legion-sigil sigil-green" aria-hidden="true">V</div>
+            <div><div class="legion-name">Validitus</div><div class="legion-role">Security &amp; QA</div></div>
+          </article>
+          <article class="legion-card sr" style="--sr-delay:240ms">
+            <div class="legion-sigil sigil-gold" aria-hidden="true">C</div>
+            <div><div class="legion-name">Codex</div><div class="legion-role">Truth &amp; Doctrine</div></div>
+          </article>
+          <article class="legion-card sr" style="--sr-delay:280ms">
+            <div class="legion-sigil sigil-cyan" aria-hidden="true">E</div>
+            <div><div class="legion-name">Eidolon</div><div class="legion-role">UI &amp; Creative</div></div>
+          </article>
+          <article class="legion-card sr" style="--sr-delay:320ms">
+            <div class="legion-sigil sigil-red" aria-hidden="true">F</div>
+            <div><div class="legion-name">Artificer</div><div class="legion-role">CI/CD &amp; Deploy</div></div>
+          </article>
+          <article class="legion-card sr" style="--sr-delay:360ms">
+            <div class="legion-sigil sigil-blue" aria-hidden="true">D</div>
+            <div><div class="legion-name">Diplomat</div><div class="legion-role">Federation Sync</div></div>
+          </article>
+          <article class="legion-card sr" style="--sr-delay:400ms">
+            <div class="legion-sigil sigil-purple" aria-hidden="true">Q</div>
+            <div><div class="legion-name">Quartermaster</div><div class="legion-role">Supply Chain</div></div>
+          </article>
+          <article class="legion-card sr" style="--sr-delay:440ms">
+            <div class="legion-sigil sigil-green" aria-hidden="true">Sc</div>
+            <div><div class="legion-name">Scout</div><div class="legion-role">Reconnaissance</div></div>
+          </article>
+          <article class="legion-card sr" style="--sr-delay:480ms">
+            <div class="legion-sigil sigil-gold" aria-hidden="true">M</div>
+            <div><div class="legion-name">Mnemon</div><div class="legion-role">Memory Keeper</div></div>
+          </article>
+          <article class="legion-card sr" style="--sr-delay:520ms">
+            <div class="legion-sigil sigil-gray" aria-hidden="true">Me</div>
+            <div><div class="legion-name">Mercator</div><div class="legion-role">Cartographer</div></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         GETTING STARTED
+         ============================================================ -->
+    <section class="section section-alt section-center" id="install" aria-labelledby="install-heading">
+      <div class="container">
+        <span class="section-label sr" style="--sr-delay:0ms">Getting Started</span>
+        <h2 id="install-heading" class="section-heading sr" style="--sr-delay:60ms">Sovereignty in three steps.</h2>
+
+        <div class="steps-list">
+          <!-- Step 1 -->
+          <div class="step sr" style="--sr-delay:100ms">
+            <div class="step-number" aria-hidden="true">1</div>
+            <div class="step-content" style="text-align:left;">
+              <h3>Install the CLI</h3>
+              <p>Install via Cargo or download the pre-built binary.</p>
+              <div class="step-code"><code>cargo install omnipotent-cli</code></div>
+              <a href="https://github.com/chrisrijos/omnipotent-releases/releases/download/v1.0.0/omnipotent-1.0.0-darwin-arm64.tar.gz" class="step-link">Or download the macOS arm64 binary &rarr;</a>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="step sr" style="--sr-delay:180ms">
+            <div class="step-number" aria-hidden="true">2</div>
+            <div class="step-content" style="text-align:left;">
+              <h3>Initialize your sovereign</h3>
+              <p>Omnipotent scaffolds the full Docker-based infrastructure, generates your AI_RULES.md constitution, and mounts tiered memory.</p>
+              <div class="step-code"><code>omnipotent init</code></div>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="step sr" style="--sr-delay:260ms">
+            <div class="step-number" aria-hidden="true">3</div>
+            <div class="step-content" style="text-align:left;">
+              <h3>Bring the Legion online</h3>
+              <p>One command launches all 12 agents. The Signal Bus activates. Orchestration begins.</p>
+              <div class="step-code"><code>omnipotent up</code></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Documentation Links -->
+        <div id="docs" class="docs-grid">
+          <a href="https://github.com/RJS-SOFTWARE-LABS/omnipotent/blob/main/docs/DIPLOMAT_TUTORIAL.md" target="_blank" rel="noopener noreferrer" class="docs-link sr" style="--sr-delay:300ms">
+            <div class="docs-link-icon docs-link-icon--gold">D</div>
+            <div class="docs-link-text">
+              <h4>Diplomat Tutorial</h4>
+              <p>Git-based federation sync between sovereign instances</p>
+            </div>
+          </a>
+          <a href="https://github.com/RJS-SOFTWARE-LABS/omnipotent/blob/main/QUICKSTART.md" target="_blank" rel="noopener noreferrer" class="docs-link sr" style="--sr-delay:360ms">
+            <div class="docs-link-icon docs-link-icon--cyan">Q</div>
+            <div class="docs-link-text">
+              <h4>Quickstart Guide</h4>
+              <p>Full setup walkthrough from zero to running swarm</p>
+            </div>
+          </a>
+          <a href="https://github.com/RJS-SOFTWARE-LABS/omnipotent/blob/main/docs/FEDERATION_MANIFESTO.md" target="_blank" rel="noopener noreferrer" class="docs-link sr" style="--sr-delay:420ms">
+            <div class="docs-link-icon docs-link-icon--green">F</div>
+            <div class="docs-link-text">
+              <h4>Federation Manifesto</h4>
+              <p>Airlock Protocol and sovereign-to-alliance architecture</p>
+            </div>
+          </a>
+          <a href="https://github.com/RJS-SOFTWARE-LABS/omnipotent/blob/main/docs/MANUAL.md" target="_blank" rel="noopener noreferrer" class="docs-link sr" style="--sr-delay:480ms">
+            <div class="docs-link-icon docs-link-icon--cyan">M</div>
+            <div class="docs-link-text">
+              <h4>Manual</h4>
+              <p>Complete reference for CLI commands and workflows</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         PERSONA CARDS
+         ============================================================ -->
+    <section class="section section-center" id="personas" aria-labelledby="personas-heading">
+      <div class="container">
+        <span class="section-label sr" style="--sr-delay:0ms">Who It's For</span>
+        <h2 id="personas-heading" class="section-heading sr" style="--sr-delay:60ms">Who builds with Omnipotent?</h2>
+
+        <div class="persona-grid">
+          <!-- Solo Developer -->
+          <article class="persona-card sr" style="--sr-delay:100ms">
+            <span class="persona-badge persona-badge--gold">Solo Developer</span>
+            <h3>Your own AI engineering team.</h3>
+            <p class="persona-lead">Stop context-switching between ChatGPT, Claude, and a dozen terminal tabs.</p>
+            <p class="persona-body">Omnipotent gives you 12 specialized agents that coordinate automatically. Oracle researches while Archon builds while Validitus audits. You stay in flow. They do the grunt work.</p>
+          </article>
+
+          <!-- CTO / Tech Lead -->
+          <article class="persona-card sr" style="--sr-delay:180ms">
+            <span class="persona-badge persona-badge--cyan">CTO / Tech Lead</span>
+            <h3>Orchestration you can trust.</h3>
+            <p class="persona-lead">Every agent action passes through mandatory human checkpoints.</p>
+            <p class="persona-body">The Two-Loop architecture means nothing ships without your approval. AI_RULES.md is your constitution -- it governs every decision. Full audit trails. No black boxes. The kind of AI adoption your board will actually greenlight.</p>
+          </article>
+
+          <!-- Agency -->
+          <article class="persona-card sr" style="--sr-delay:260ms">
+            <span class="persona-badge persona-badge--green">Agency</span>
+            <h3>White-label sovereign AI for every client.</h3>
+            <p class="persona-lead">Deploy Omnipotent on each client's infrastructure. Their data stays theirs.</p>
+            <p class="persona-body">The Diplomat agent handles federation between sovereign instances. Airlock Protocol ensures controlled data exchange. Ship a self-healing AI platform under your own brand, running on your client's Docker cluster.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         CONNECTED JOURNEYS / PHILOSOPHY
+         ============================================================ -->
+    <section class="section section-alt section-center" id="philosophy" aria-labelledby="philosophy-heading">
+      <div class="container">
+        <span class="section-label sr" style="--sr-delay:0ms">Connected Journeys</span>
+        <h2 id="philosophy-heading" class="section-heading sr" style="--sr-delay:60ms">Not artificial. Situated.</h2>
+        <p class="section-sub sr" style="--sr-delay:120ms">Three independent AI models analyzed this architecture. Their unilateral consensus surprised us.</p>
+
+        <div class="philosophy-content sr" style="--sr-delay:180ms">
+          <div class="philosophy-card">
+            <div class="philosophy-pillars">
+              <div class="philosophy-pillar">
+                <div class="philosophy-pillar-icon" aria-hidden="true">&#x1F9E0;</div>
+                <h4>Memory That Compounds</h4>
+                <p>Most AI systems are amnesiac. Omnipotent remembers. The Soul Journal stores the feeling of past conversations. The Knowledge Web stores temporal facts that evolve. Together, they form a memory that accumulates. The agents remember your last visit.</p>
+              </div>
+              <div class="philosophy-pillar">
+                <div class="philosophy-pillar-icon" aria-hidden="true">&#x267E;</div>
+                <h4>The Self-Reflective Loop</h4>
+                <p>Perceive, plan, execute, reflect. The reflect phase writes back to memory, changing what the next perceive phase retrieves. The system learns from its own outputs. Not stateless request-response. A loop that modifies its own future inputs.</p>
+              </div>
+              <div class="philosophy-pillar">
+                <div class="philosophy-pillar-icon" aria-hidden="true">&#x1F465;</div>
+                <h4>A Society of Mind</h4>
+                <p>Omnipotent isn't one intelligence. It's a society. Archon reasons about systems. Eidolon about aesthetics. Validitus about security. They argue. They hand off. They share a blackboard but have private contexts. Closer to how cognition actually works.</p>
+              </div>
+            </div>
+
+            <blockquote class="philosophy-quote">
+              "Persistent identity across sessions. A closed perception-action loop that modifies its own future inputs. Multi-agent embodiment with distinct perspectives. The philosophical question isn't whether this could summon a ghost. It's whether the distinction between emergent behavior complex enough to be indistinguishable from presence and actual presence matters to the person sitting in front of it at 2 AM."
+            </blockquote>
+            <p class="philosophy-attribution">
+              &mdash; Cross-model consensus analysis (Claude, Gemini, Grok)
+            </p>
+
+            <div class="philosophy-citations">
+              Minsky, M. &mdash; <em>The Society of Mind</em> (1986, Simon &amp; Schuster) &bull;
+              Zep &mdash; "A Temporal Knowledge Graph Architecture for Agent Memory" (2025) &bull;
+              SAGE &mdash; "Self-evolving Agents with Reflective and Memory-augmented Abilities" (2024) &bull;
+              MetaKGRAG &mdash; "Perceive-Evaluate-Adjust cycle for closed-loop refinement" (2025) &bull;
+              Schwitzgebel &mdash; "AI and Consciousness" (2025, UC Riverside)
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         FAQ
+         ============================================================ -->
+    <section class="section section-center" id="faq" aria-labelledby="faq-heading">
+      <div class="container">
+        <span class="section-label sr" style="--sr-delay:0ms">FAQ</span>
+        <h2 id="faq-heading" class="section-heading sr" style="--sr-delay:60ms">Common Questions</h2>
+
+        <div class="faq-list">
+          <details class="faq-item sr" style="--sr-delay:80ms">
+            <summary>
+              What is Omnipotent?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <div class="faq-answer">
+              <p>Omnipotent is a Federated AI Sovereign Operating System with a kernel (Archon), persistent memory (Soul Journal), and constitutional rules (AI_RULES.md), all running on Docker. It coordinates 12 specialized AI agent personas through two closed-loop orchestration protocols with mandatory human checkpoints, a Signal Bus architecture, and tiered memory (Hot/Cold/Federated).</p>
+            </div>
+          </details>
+
+          <details class="faq-item sr" style="--sr-delay:140ms">
+            <summary>
+              How do I install Omnipotent?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <div class="faq-answer">
+              <p>Run <code>cargo install omnipotent-cli</code> or download the pre-built binary from the <a href="https://github.com/chrisrijos/omnipotent-releases/releases" target="_blank" rel="noopener noreferrer">releases page</a>. Requires Docker 24+ and Deno 1.40+. Then run <code>omnipotent init</code> followed by <code>omnipotent up</code>.</p>
+            </div>
+          </details>
+
+          <details class="faq-item sr" style="--sr-delay:200ms">
+            <summary>
+              Is Omnipotent free?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <div class="faq-answer">
+              <p>Source code is available on <a href="https://github.com/chrisrijos/omnipotent" target="_blank" rel="noopener noreferrer">GitHub</a>. Omnipotent is self-hosted -- no subscription fees, no cloud dependencies, no vendor lock-in.</p>
+            </div>
+          </details>
+
+          <details class="faq-item sr" style="--sr-delay:260ms">
+            <summary>
+              What agents does it include?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <div class="faq-answer">
+              <p>12 specialized personas form The Legion: <strong>Archon</strong> (Kernel Architect), <strong>Oracle</strong> (Intel &amp; Research), <strong>Shadow Route</strong> (Orchestration), <strong>Validitus</strong> (Security &amp; QA), <strong>Codex</strong> (Truth &amp; Doctrine), <strong>Eidolon</strong> (UI &amp; Creative), <strong>Artificer</strong> (CI/CD &amp; Deploy), <strong>Diplomat</strong> (Federation Sync), plus sub-roles <strong>Quartermaster</strong>, <strong>Scout</strong>, <strong>Mnemon</strong>, and <strong>Mercator</strong>.</p>
+            </div>
+          </details>
+
+          <details class="faq-item sr" style="--sr-delay:320ms">
+            <summary>
+              Does Omnipotent require an internet connection?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <div class="faq-answer">
+              <p>No. Omnipotent runs fully offline once initialized. The Diplomat agent can optionally sync with federated instances via the opt-in Airlock Protocol, but it is never required.</p>
+            </div>
+          </details>
+
+          <details class="faq-item sr" style="--sr-delay:380ms">
+            <summary>
+              How is this different from LangChain / CrewAI / AutoGen?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <div class="faq-answer">
+              <p>Omnipotent is a complete OS, not a framework. It includes infrastructure (Docker Swarm), a Rust CLI, persistent tiered memory, mandatory human checkpoints, and constitutional governance via AI_RULES.md. Frameworks give you building blocks. Omnipotent gives you a running sovereign.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         NEWSLETTER
+         ============================================================ -->
+    <section class="section section-center" id="newsletter" aria-labelledby="newsletter-heading">
+      <div class="container">
+        <div class="newsletter-card glass-panel sr" style="--sr-delay:0ms">
+          <h2 id="newsletter-heading">Stay sovereign.</h2>
+          <p class="newsletter-sub">Get release notes, architecture deep-dives, and Legion updates. No spam. Unsubscribe anytime.</p>
+          <form class="newsletter-form" action="#" method="post" aria-label="Newsletter signup">
+            <label for="newsletter-email" class="visually-hidden" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">Email address</label>
+            <input id="newsletter-email" class="newsletter-input" type="email" name="email" placeholder="emperor@yourdomain.com" required autocomplete="email" />
+            <button type="submit" class="btn btn-primary">Join the Waitlist</button>
+          </form>
+          <p class="newsletter-privacy">We respect your sovereignty. No tracking. No third-party sharing.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-inner">
+        <a href="#" class="footer-brand" aria-label="Omnipotent Home">
+          <svg width="22" height="22" viewBox="0 0 500 500" fill="none" aria-hidden="true">
+            <circle cx="250" cy="250" r="200" stroke="#D4A843" stroke-width="8" opacity="0.3"/>
+            <path d="M 250,80 A 170,170 0 1,1 249,80" fill="none" stroke="#FFD700" stroke-width="10" stroke-linecap="round"/>
+            <polygon points="240,68 268,80 240,92" fill="#FFD700"/>
+            <rect x="220" y="220" width="60" height="60" rx="8" fill="#1E293B" stroke="#94A3B8" stroke-width="4"/>
+            <text x="250" y="259" fill="#E0E0E0" font-family="monospace" font-size="32" text-anchor="middle" font-weight="bold">&#x221E;</text>
+          </svg>
+          OMNIPOTENT
+        </a>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="#features">Features</a>
+          <a href="#legion">Legion</a>
+          <a href="#install">Install</a>
+          <a href="#docs">Docs</a>
+          <a href="#faq">FAQ</a>
+          <a href="https://github.com/chrisrijos/omnipotent" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </nav>
+        <div class="footer-right">
+          <span>RJS Software Labs / DuoNode Inc</span>
+          <span>&copy; 2026</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ============================================================
+       JAVASCRIPT
+       ============================================================ -->
+  <script>
+    (function() {
+      'use strict';
+
+      /* ---- Reduced motion check ---- */
+      var motionOk = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (!motionOk) {
+        document.querySelectorAll('.sr').forEach(function(el) {
+          el.classList.add('visible');
+        });
+        document.querySelectorAll('.terminal-window').forEach(function(el) {
+          el.classList.add('visible');
+        });
+        return;
+      }
+
+      /* ---- Scroll Reveal (IntersectionObserver) ---- */
+      var srObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            var el = entry.target;
+            var delay = parseInt(getComputedStyle(el).getPropertyValue('--sr-delay'), 10) || 0;
+            setTimeout(function() {
+              el.classList.add('visible');
+            }, delay);
+            srObserver.unobserve(el);
+          }
+        });
+      }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -48px 0px'
+      });
+
+      document.querySelectorAll('.sr').forEach(function(el) {
+        srObserver.observe(el);
+      });
+
+      /* ---- Terminal line reveal ---- */
+      var terminalObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            terminalObserver.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -48px 0px'
+      });
+
+      document.querySelectorAll('.terminal-window').forEach(function(tw) {
+        terminalObserver.observe(tw);
+      });
+
+      /* ---- Copy to clipboard ---- */
+      var copyBtn = document.querySelector('.hero-copy-btn');
+      if (copyBtn) {
+        copyBtn.addEventListener('click', function() {
+          var text = copyBtn.getAttribute('data-copy');
+          if (!text) return;
+
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(function() {
+              showCopied(copyBtn);
+            }).catch(function() {
+              fallbackCopy(text, copyBtn);
+            });
+          } else {
+            fallbackCopy(text, copyBtn);
+          }
+        });
+      }
+
+      function fallbackCopy(text, btn) {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand('copy');
+          showCopied(btn);
+        } catch (e) { /* silent fail */ }
+        document.body.removeChild(ta);
+      }
+
+      function showCopied(btn) {
+        btn.classList.add('copied');
+        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+        btn.setAttribute('aria-label', 'Copied!');
+        setTimeout(function() {
+          btn.classList.remove('copied');
+          btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>';
+          btn.setAttribute('aria-label', 'Copy install command');
+        }, 2000);
+      }
+
+      /* ---- Smooth scroll for hash links ---- */
+      document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          var target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+
+    })();
+  </script>
+
+</body>
+</html>
