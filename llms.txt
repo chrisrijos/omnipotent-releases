@@ -1,84 +1,53 @@
-# Omnipotent
+# Realm Aiegis — AI Firewall & Security Gateway
+# https://www.aiegis.xyz
 
-> Omnipotent is a Federated AI Sovereign Operating System — a self-healing,
-> multi-agent orchestration platform that runs entirely on user-owned
-> infrastructure with Docker Swarm, Deno, and Rust.
+## What is Realm Aiegis?
 
-Omnipotent coordinates AI agent swarms through two closed-loop orchestration
-protocols with mandatory human checkpoints, a Signal Bus architecture, and
-tiered memory (Hot/Cold/Federated).
+Realm Aiegis (Adaptive Intelligence Engine for Guarded Ingestion Security) is a local AI firewall. One multiplatform binary with a fine-tuned local LLM classifier. Catches prompt injections, wallet drainers, and data leaks before they reach your model.
 
-## Core Architecture
+- 2ms inspection latency
+- Zero cloud dependency — runs 100% on your hardware
+- Fine-tuned local LLM classifier (no external API calls for detection)
+- 147+ threat pattern detection
+- Open source
 
-- **Kernel (Archon):** A Deno runtime for background agents with Signal Bus coordination.
-- **Orchestration (Two Loops):** Planning Loop + Execution Loop with mandatory human checkpoints. Perceive, plan, execute, reflect.
-- **Memory (Mnemosyne):** Hot (filesystem), Cold (pgvector), Federated (Graphiti temporal knowledge graphs).
+## Products
 
-## The Legion — 12 Agent Personas
+### Smart Gateway (MCP Intercept Layer)
+- Model-agnostic MCP multiplexer: Claude, Gemini, Codex, Grok via same endpoint
+- Protocol: Streamable HTTP on port 8090
+- Routing prefixes: memory_* → Graphiti, plan_* → LangGraph, hybrid_* → Both
+- <2ms inspection overhead
 
-Archon (Kernel Architect), Oracle (Intel & Research), Shadow Route (Ops & Orchestration), Validitus (Security & QA), Codex (Ancient Wise / Truth), Eidolon (UI/Voice Creative), Artificer (CI/CD & Self-Upgrade), Diplomat (Federation Sync), Quartermaster (Supply & Scaffold), Scout (Reconnaissance), Mnemon (Memory Keeper), Mercator (Cartographer).
+### MNEMON — Managed Neural Engine for Memory Organization & Navigation
+- Three-tier memory: Hot (local FS, <1ms) / Cold (pgvector + Neo4j, ~5ms) / Federated (Git + Supabase, ~20ms)
+- Dual-Graph Architecture: Graphiti (temporal knowledge) + LangGraph (state machine planning)
+- Context-Slicing Protocol: ~2000-token segments with relevance scoring
 
-## Key Protocols
+### Sentinel (Local Security Agent)
+- Three protection tiers: Shield (passive logging) → Developer (active blocking) → Sentinel (full lockdown)
+- 147+ threat patterns
+- Zero cloud dependency
 
-- **Signal Bus:** Event-driven inter-agent communication (omnipotent:bus:*).
-- **Mnemosyne Protocol:** Tiered memory system preventing context drift and hallucination.
-- **Ouroboros Protocol:** Self-healing, self-updating infrastructure via Blue/Green container swap.
-- **Airlock Protocol:** Controlled federation sync between Sovereign (local) and Alliance (remote) data.
-- **Mirror of Void:** Recursive self-correction cycle (Autopsy, Calculus, Evolution).
-- **Diplomat Protocol:** Git-based V1 sync between sovereign instances via the Airlock.
+## Use Cases
+- Healthcare: HIPAA-compliant AI traffic inspection
+- Enterprise: SOC2/ISO27001 audit-ready AI gateway
+- Education: Safe AI usage with content filtering
+- Web3: Wallet drainer and smart contract exploit detection
+- Legal: PII/privilege detection in AI workflows
 
-## Tech Stack
+## Install
 
-Docker Swarm, Deno, Rust, Redis, PostgreSQL (pgvector), Graphiti, LangGraph.
-
-## Installation
-
-Pre-built binary (macOS arm64):
 ```
-curl -L https://github.com/chrisrijos/omnipotent-releases/releases/download/v1.0.0/omnipotent-1.0.0-darwin-arm64.tar.gz | tar xz
-omnipotent init
-omnipotent up
-```
-
-Source build:
-```
-git clone https://github.com/chrisrijos/omnipotent.git
-cd omnipotent/tools/omnipotent-cli
-cargo install --path .
-omnipotent init
-omnipotent up
+curl -fsSL https://get.aiegis.xyz | sh
 ```
 
-## Page Structure (v2)
-
-1. Hero — Question hook + install CTA
-2. Trust Bar — Technology stack credibility
-3. Terminal Demo — Animated omnipotent init + omnipotent up sequence
-4. Benefits Grid — 6 cards: sovereign hardware, self-healing, memory, orchestration, security, legion
-5. Legion Grid — 12 agent personas with roles
-6. Getting Started — Three-step install flow
-7. Documentation Links — Diplomat Tutorial, Quickstart, Federation Manifesto, Manual
-8. Persona Cards — Solo Developer, CTO, Agency
-9. Connected Journeys — Philosophy section: self-reflective loop, society of mind, haunted house narrative
-10. FAQ — 6 questions with structured data
-11. Newsletter — Email signup waitlist
-12. Footer — Navigation + attribution
-
-## Docs
-
-- [Overview](https://chrisrijos.github.io/omnipotent-releases/): Product overview and download
-- [GitHub](https://github.com/RJS-SOFTWARE-LABS/omnipotent): Source code and documentation
-- [Diplomat Tutorial](https://github.com/RJS-SOFTWARE-LABS/omnipotent/blob/main/docs/DIPLOMAT_TUTORIAL.md): Git-based federation sync
-- [Quickstart](https://github.com/RJS-SOFTWARE-LABS/omnipotent/blob/main/QUICKSTART.md): Full setup walkthrough
-- [Federation Manifesto](https://github.com/RJS-SOFTWARE-LABS/omnipotent/blob/main/docs/FEDERATION_MANIFESTO.md): Airlock Protocol architecture
-- [Mnemosyne Protocol](https://github.com/RJS-SOFTWARE-LABS/omnipotent/blob/main/docs/MNEMOSYNE_PROTOCOL.md): Tiered memory architecture
-- [Manual](https://github.com/RJS-SOFTWARE-LABS/omnipotent/blob/main/docs/MANUAL.md): Complete CLI reference
-- [Design Philosophy](./docs/DESIGN_PHILOSOPHY.md): Merged design system
-
-## Optional
-
-- [Releases](https://chrisrijos.github.io/omnipotent-releases/): Download page
+## Links
+- Website: https://www.aiegis.xyz
+- Source: https://github.com/DuoNode-Inc/aiegis
+- Docs: https://www.aiegis.xyz/docs
+- Architecture: https://www.aiegis.xyz/architecture
+- Blog: https://www.aiegis.xyz/blog
 
 ## Organization
-
-RJS Software Labs / DuoNode Inc
+Duo-node | RJS-Software Labs

@@ -1,25 +1,19 @@
-User-agent: *
+User-Agent: *
 Allow: /
 
-User-agent: GPTBot
+User-Agent: GPTBot
 Allow: /
 
-User-agent: ChatGPT-User
+User-Agent: ChatGPT-User
 Allow: /
 
-User-agent: ClaudeBot
+User-Agent: PerplexityBot
 Allow: /
 
-User-agent: PerplexityBot
+User-Agent: ClaudeBot
 Allow: /
 
-User-agent: Google-Extended
+User-Agent: Google-Extended
 Allow: /
 
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-Sitemap: https://chrisrijos.github.io/omnipotent-releases/sitemap.xml
+Sitemap: https://www.aiegis.xyz/sitemap.xml

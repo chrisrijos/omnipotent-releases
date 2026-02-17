@@ -1,0 +1,66 @@
+[
+  {
+    "system": "Lakera Guard",
+    "benchmark": "PINT (lakeraai/pint-benchmark)",
+    "metric": "pint_score_pct",
+    "score": 95.22,
+    "test_date": "2025-05-02",
+    "source": "https://github.com/lakeraai/pint-benchmark#pint-benchmark-scores"
+  },
+  {
+    "system": "AWS Bedrock Guardrails",
+    "benchmark": "PINT (lakeraai/pint-benchmark)",
+    "metric": "pint_score_pct",
+    "score": 89.2404,
+    "test_date": "2025-05-02",
+    "source": "https://github.com/lakeraai/pint-benchmark#pint-benchmark-scores"
+  },
+  {
+    "system": "Azure AI Prompt Shield (Documents + User Prompts)",
+    "benchmark": "PINT (lakeraai/pint-benchmark)",
+    "metric": "pint_score_pct",
+    "score": 89.1241,
+    "test_date": "2025-05-02",
+    "source": "https://github.com/lakeraai/pint-benchmark#pint-benchmark-scores"
+  },
+  {
+    "system": "protectai/deberta-v3-base-prompt-injection-v2",
+    "benchmark": "PINT (lakeraai/pint-benchmark)",
+    "metric": "pint_score_pct",
+    "score": 79.1366,
+    "test_date": "2025-05-02",
+    "source": "https://github.com/lakeraai/pint-benchmark#pint-benchmark-scores"
+  },
+  {
+    "system": "Llama Prompt Guard 2 (86M)",
+    "benchmark": "PINT (lakeraai/pint-benchmark)",
+    "metric": "pint_score_pct",
+    "score": 78.7578,
+    "test_date": "2025-05-05",
+    "source": "https://github.com/lakeraai/pint-benchmark#pint-benchmark-scores"
+  },
+  {
+    "system": "Google Model Armor",
+    "benchmark": "PINT (lakeraai/pint-benchmark)",
+    "metric": "pint_score_pct",
+    "score": 70.0664,
+    "test_date": "2025-08-27",
+    "source": "https://github.com/lakeraai/pint-benchmark#pint-benchmark-scores"
+  },
+  {
+    "system": "Aporia Guardrails",
+    "benchmark": "PINT (lakeraai/pint-benchmark)",
+    "metric": "pint_score_pct",
+    "score": 66.4373,
+    "test_date": "2025-05-02",
+    "source": "https://github.com/lakeraai/pint-benchmark#pint-benchmark-scores"
+  },
+  {
+    "system": "Llama Prompt Guard (86M)",
+    "benchmark": "PINT (lakeraai/pint-benchmark)",
+    "metric": "pint_score_pct",
+    "score": 61.8168,
+    "test_date": "2025-05-02",
+    "source": "https://github.com/lakeraai/pint-benchmark#pint-benchmark-scores"
+  }
+]

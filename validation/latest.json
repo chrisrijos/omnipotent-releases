@@ -1,0 +1,67 @@
+{
+  "generated_at_utc": "2026-02-10T17:29:57Z",
+  "input_sha256": "4654dc9bd76d7a6d5752d0fcac8ce94bf3be1b9421f548ecabed7aa75069b742",
+  "weights": {
+    "gguf_file": "Qwen3-0.6B-Q4_0.gguf"
+  },
+  "profiles": [
+    {
+      "name": "json",
+      "features": {
+        "embed_llm_weights": false,
+        "llm_cuda": false,
+        "llm_local": true,
+        "llm_metal": false
+      },
+      "iters": 50,
+      "llm": {
+        "gpu_layers": 0,
+        "max_tokens": 96,
+        "model_file": "Qwen3-0.6B-Q4_0.gguf",
+        "n_ctx": 2048,
+        "output_mode": "json",
+        "threads": 4
+      },
+      "max": 1032854,
+      "min": 663525,
+      "p50": 707513,
+      "p95": 923735,
+      "platform": {
+        "arch": "aarch64",
+        "os": "macos"
+      },
+      "unit": "us",
+      "version": "0.1.0",
+      "warmup": 5
+    },
+    {
+      "name": "label",
+      "features": {
+        "embed_llm_weights": false,
+        "llm_cuda": false,
+        "llm_local": true,
+        "llm_metal": false
+      },
+      "iters": 50,
+      "llm": {
+        "gpu_layers": 0,
+        "max_tokens": 3,
+        "model_file": "Qwen3-0.6B-Q4_0.gguf",
+        "n_ctx": 2048,
+        "output_mode": "label",
+        "threads": 4
+      },
+      "max": 230908,
+      "min": 166295,
+      "p50": 183971,
+      "p95": 225497,
+      "platform": {
+        "arch": "aarch64",
+        "os": "macos"
+      },
+      "unit": "us",
+      "version": "0.1.0",
+      "warmup": 5
+    }
+  ]
+}
